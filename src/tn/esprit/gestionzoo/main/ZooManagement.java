@@ -2,41 +2,48 @@ package tn.esprit.gestionzoo.main;
 
 
 import tn.esprit.gestionzoo.entities.*;
+import tn.esprit.gestionzoo.exception.AnimalAgeException;
+import tn.esprit.gestionzoo.exception.ZooFullException;
 
 public class ZooManagement {
 
     public static void main(String[] args) {
         Animal lion = new Animal();
         lion.setName("Simba");
-        lion.setAge(8);
+        try {
+            lion.setAge(8);
+        } catch (AnimalAgeException e) {
+            throw new RuntimeException(e);
+        }
         lion.setFamily("Cats");
         lion.setMammal(true);
 
         Zoo myZoo = new Zoo("Wildlife Park", "Ariana");
         Zoo notMyZoo = new Zoo("WaterPark", "Siliana");
 
+try {
+    Animal dog = new Animal("Canine", "Snoopy", 2, true);
+    System.out.println(myZoo.addAnimal(lion));
+    System.out.println(myZoo.addAnimal(dog));
 
-        Animal dog = new Animal("Canine", "Snoopy", 2, true);
+    myZoo.displayAnimals();
 
-
-        System.out.println(myZoo.addAnimal(lion));
-        System.out.println(myZoo.addAnimal(dog));
-
-        myZoo.displayAnimals();
-
-        System.out.println(myZoo.searchAnimal(dog));
-        Animal dog2 = new Animal("Canine", "lll", 2, true);
-        System.out.println(myZoo.searchAnimal(dog2));
+    System.out.println(myZoo.searchAnimal(dog));
+    Animal dog2 = new Animal("Canine", "lll", 2, true);
+    System.out.println(myZoo.searchAnimal(dog2));
 
 //           System.out.println(myZoo.removeAnimal(dog));
-        myZoo.displayAnimals();
+    myZoo.displayAnimals();
 
 
-        System.out.println(myZoo);
+    System.out.println(myZoo);
 
-        myZoo.addAnimal(lion);
-        myZoo.addAnimal(dog);
-        myZoo.addAnimal(dog2);
+    myZoo.addAnimal(lion);
+    myZoo.addAnimal(dog);
+    myZoo.addAnimal(dog2);
+}catch (ZooFullException e){
+    System.out.println("Zoo is full");
+}
         myZoo.displayAnimals();
 
 
@@ -44,17 +51,16 @@ public class ZooManagement {
         Zoo notMyZoo1 = Zoo.comparerZoo(myZoo, notMyZoo);
         System.out.println(notMyZoo1);
 
-        Aquatic aquatic = new Aquatic("Ocean","fff",6,true,"zoo1");
-        Terrestrial terrestrial = new Terrestrial ("Ocean","fff",6,true,4);
+        Aquatic aquatic = new Aquatic("Ocean", "fff", 6, true, "zoo1");
+        Terrestrial terrestrial = new Terrestrial("Ocean", "fff", 6, true, 4);
 
         // Dauphin
-        Dolphin dolphin = new Dolphin("Ocean","fff",6,true,"zoo1",25.0f);
+        Dolphin dolphin = new Dolphin("Ocean", "fff", 6, true, "zoo1", 25.0f);
 
         // Pingouin
-        Penguin penguin = new Penguin("Antarctique","hello",6,true,"zoo1", 10.0f);
+        Penguin penguin = new Penguin("Antarctique", "hello", 6, true, "zoo1", 10.0f);
 
-        Aquatic dolphin2 = new Dolphin("Ocean","fff",6,true,"zoo1",25.0f);
-
+        Aquatic dolphin2 = new Dolphin("Ocean", "fff", 6, true, "zoo1", 25.0f);
 
 
         System.out.println(aquatic);
@@ -74,8 +80,8 @@ public class ZooManagement {
         // Appel de la méthode swim() pour tous les animaux aquatiques dans le zoo
 
         for (Aquatic aquaticAnimals : myZoo.getAquaticAnimals()) {
-            if(aquaticAnimals != null)
-            aquatic.swim();
+            if (aquaticAnimals != null)
+                aquatic.swim();
         }
 
         //tester la methode maxPenguinSwimmingDepth  pour obtenir la profondeur maximale de nage des pingouins
@@ -89,12 +95,7 @@ public class ZooManagement {
 
         System.out.println("Is dolphin1 equal to dolphin2? " + dolphin.equals(dolphin2));
 
-
-
     }
-
-
-
 
 
 }

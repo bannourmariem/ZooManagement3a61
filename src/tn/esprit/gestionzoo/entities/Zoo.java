@@ -1,6 +1,8 @@
 package tn.esprit.gestionzoo.entities;
 
 
+import tn.esprit.gestionzoo.exception.ZooFullException;
+
 public class Zoo {
 
     public static final int NUMBER_OF_CAGES = 25;
@@ -73,15 +75,20 @@ public class Zoo {
         System.out.println("Name: " + name + ", City: " + city + ", N° Cages: " + NUMBER_OF_CAGES + " N° animals: " + nbrAnimals);
     }
 
-    public boolean addAnimal(Animal animal) {
+    public boolean addAnimal(Animal animal) throws ZooFullException {
+
         if (searchAnimal(animal) != -1)
             return false;
-        if (isZooFull())
-            return false;
+        if (isZooFull()) {
+            throw new ZooFullException() ;
+        }
+
         animals[nbrAnimals] = animal;
         nbrAnimals++;
         return true;
     }
+
+
 
     public boolean removeAnimal(Animal animal) {
         int indexAnimal = searchAnimal(animal);
@@ -147,7 +154,25 @@ public class Zoo {
         }
 
         return maxDepth;
+
     }
+
+  /*  public float maxPenguinSwimmingDepth() {
+        float maxSwim= 0 ;
+
+        for (int i =0 ; 1<nbrAquaticAnimals ; i++) {
+            if (aquaticAnimals[i] instanceof Penguin penguin)  {  // Vérifiez si l'animal est un pingouin
+                if (maxSwim < penguin.getSwimmingDepth()) {
+                    maxSwim = penguin.getSwimmingDepth();
+                }
+            }
+
+        }
+
+        return  maxSwim ;
+    }   */
+
+
 
 
     // insctruction 30
